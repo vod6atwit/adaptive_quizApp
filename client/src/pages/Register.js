@@ -1,6 +1,7 @@
 import Wrapper from '../assets/wrapper/Register';
-import { Logo, FormRow } from '../components';
+import { Logo, FormRow, Alert } from '../components';
 import { useState } from 'react';
+import { useAppContext } from '../context/appContext';
 
 const initialState = {
   name: '',
@@ -12,12 +13,14 @@ const initialState = {
 const Register = () => {
   const [values, setvalues] = useState(initialState);
 
+  const { showAlert, displayAlert } = useAppContext();
+
   const onSubmit = e => {
     e.preventDefault();
     const { name, email, password, isMember } = values;
 
     if (!email || !password || (!isMember && !name)) {
-      console.log('error');
+      displayAlert();
       return;
     }
 
@@ -30,7 +33,7 @@ const Register = () => {
   };
 
   const toggleMember = () => {
-    setvalues({ ...values, isMember: !values.isMember });
+    setvalues({ ...initialState, isMember: !values.isMember });
   };
 
   return (
@@ -39,7 +42,7 @@ const Register = () => {
         <Logo />
         <h3>{values.isMember ? 'Login' : 'Register'}</h3>
 
-        {/* {showAlert && <Alert />} */}
+        {showAlert && <Alert />}
 
         {/* name input */}
         {!values.isMember && (
