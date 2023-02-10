@@ -2,11 +2,15 @@ import React from 'react';
 import Wrapper from '../assets/wrapper/Result';
 import { Link } from 'react-router-dom';
 import ResultTable from './ResultTable';
+import { useAppContext } from '../context/appContext';
 
 const Result = () => {
+  const { reStartExamAction } = useAppContext();
+
   const onRestart = () => {
-    console.log('on Restart');
+    reStartExamAction();
   };
+
   return (
     <Wrapper>
       <div className="container">

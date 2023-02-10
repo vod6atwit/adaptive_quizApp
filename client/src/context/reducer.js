@@ -3,11 +3,13 @@ import {
   DISPLAY_ALERT,
   START_EXAM_BEGIN,
   START_EXAM_SUCCESS,
+  RESTART_EXAM_ACTION,
   SET_USER_ID,
   MOVE_NEXT_ACTION,
   MOVE_PREV_ACTION,
   SET_RESULT_ACTION,
 } from './actions';
+import { initialState } from './appContext';
 
 const reducer = (state, action) => {
   if (action.type === DISPLAY_ALERT) {
@@ -43,6 +45,12 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === RESTART_EXAM_ACTION) {
+    return {
+      ...initialState,
+    };
+  }
+
   if (action.type === MOVE_NEXT_ACTION) {
     return {
       ...state,
@@ -66,7 +74,7 @@ const reducer = (state, action) => {
   if (action.type === SET_RESULT_ACTION) {
     return {
       ...state,
-      result: [...state.result, action.payload.result],
+      result: [...state.result, action.payload.checked],
     };
   }
 

@@ -1,11 +1,20 @@
 import Wrapper from '../assets/wrapper/Quiz';
 import Question from './Question';
 import { useAppContext } from '../context/appContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 const Quiz = () => {
-  const { queue, trace, moveNextQuestion, movePrevQuestion, pushAnswer } =
-    useAppContext();
+  const {
+    queue,
+    result,
+    trace,
+    moveNextQuestion,
+    movePrevQuestion,
+    pushAnswer,
+  } = useAppContext();
+
+  const [checked, setChecked] = useState(undefined);
 
   // const state = useAppContext();
   // useEffect(() => {
@@ -13,12 +22,10 @@ const Quiz = () => {
   // }, []);
 
   const onNext = () => {
-    if (trace >= queue.length - 1) return;
+    if (trace > queue.length - 1) return;
 
     moveNextQuestion();
-
-    const result = 1;
-    pushAnswer(result);
+    pushAnswer(checked);
   };
 
   const onPrev = () => {
@@ -27,12 +34,20 @@ const Quiz = () => {
     movePrevQuestion();
   };
 
+  const onChecked = check => {
+    setChecked(check);
+  };
+
+  if (result.length && result.length >= queue.length) {
+    return <Navigate to="/result" />;
+  }
+
   return (
     <Wrapper>
       <div className="container">
         <h1 className="title">quiz</h1>
 
-        <Question />
+        <Question onChecked={onChecked} />
 
         <div className="grid">
           <button className="btn btn-block" onClick={onPrev}>

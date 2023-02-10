@@ -6,6 +6,7 @@ import {
   CLEAR_ALERT,
   START_EXAM_BEGIN,
   START_EXAM_SUCCESS,
+  RESTART_EXAM_ACTION,
   SET_USER_ID,
   MOVE_NEXT_ACTION,
   MOVE_PREV_ACTION,
@@ -61,6 +62,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const reStartExamAction = () => {
+    dispatch({ type: RESTART_EXAM_ACTION });
+  };
+
   const moveNextQuestion = () => {
     dispatch({ type: MOVE_NEXT_ACTION });
   };
@@ -73,11 +78,11 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_USER_ID });
   };
 
-  const pushAnswer = result => {
+  const pushAnswer = checked => {
     dispatch({
       type: SET_RESULT_ACTION,
       payload: {
-        result,
+        checked,
       },
     });
   };
@@ -88,6 +93,7 @@ const AppProvider = ({ children }) => {
         ...state,
         displayAlert,
         startExamAction,
+        reStartExamAction,
         moveNextQuestion,
         movePrevQuestion,
         setUserId,

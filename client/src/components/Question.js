@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Wrapper from '../assets/wrapper/Question';
 import data from '../database/data';
 import { useAppContext } from '../context/appContext';
 import Loading from './Loading';
 
-const Question = () => {
-  // const [checked, setChecked] = useState(undefined);
+const Question = ({ onChecked }) => {
   const { isLoading, queue, trace, startExamAction } = useAppContext();
 
   useEffect(() => {
@@ -16,39 +15,28 @@ const Question = () => {
     return <Loading center={true} />;
   }
 
-  // if (queue.length === 0) {
-  //   return (
-  //     <Wrapper>
-  //       <h2>No questions to display...</h2>
-  //     </Wrapper>
-  //   );
-  // }
-
-  const question = queue[trace];
-  // console.log(question);
-
-  const onClick = e => {
+  const onSelect = index => {
     // setChecked(!checked);
-    // console.log(e.target);
+    onChecked(index);
   };
 
   return (
     <Wrapper>
       <div className="questions">
-        <h2 className="text-light">{question?.question}</h2>
+        <h2 className="text-light">{queue[trace]?.question}</h2>
 
-        <ul key={question?.id}>
-          {question?.options.map((q, i) => (
-            <li key={i} className="options">
+        <ul key={queue[trace]?.id}>
+          {queue[trace]?.options.map((ans, index) => (
+            <li key={index} className="options">
               <input
                 type="radio"
-                id={`q${i}-option`}
-                name="options"
                 value={false}
-                onClick={onClick}
+                name="options"
+                id={`q${index}-option`}
+                onChange={() => onSelect(index)}
               />
-              <label className="text" htmlFor={`q${i}-option`}>
-                {q}
+              <label className="text" htmlFor={`q${index}-option`}>
+                {ans}
               </label>
             </li>
           ))}
