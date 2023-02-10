@@ -1,2 +1,12 @@
 export const DISPLAY_ALERT = 'DISPLAY_ALERT';
 export const CLEAR_ALERT = 'CLEAR_ALERT';
+
+export const START_EXAM_BEGIN = 'START_EXAM_BEGIN';
+export const START_EXAM_SUCCESS = 'START_EXAM_SUCCESS';
+
+export const MOVE_NEXT_ACTION = 'MOVE_NEXT_ACTION';
+export const MOVE_PREV_ACTION = 'MOVE_PREV_ACTION';
+
+export const SET_USER_ID = 'SET_USER_ID';
+
+export const SET_RESULT_ACTION = 'SET_RESULT_ACTION';
