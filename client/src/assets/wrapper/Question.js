@@ -31,6 +31,12 @@ const Wrapper = styled.div`
     color: var(--primary-500);
   }
 
+  .checked {
+    input {
+      border: 6px solid var(--primary-500);
+    }
+  }
+
   .options {
     padding-left: 2rem;
   }

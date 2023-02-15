@@ -5,7 +5,7 @@ import { useAppContext } from '../context/appContext';
 import Loading from './Loading';
 
 const Question = ({ onChecked }) => {
-  const { isLoading, queue, trace, startExamAction, setCheckedAnswer } =
+  const { isLoading, queue, trace, startExamAction, setCheckedAnswer, result } =
     useAppContext();
 
   useEffect(() => {
@@ -29,7 +29,10 @@ const Question = ({ onChecked }) => {
 
         <ul key={queue[trace]?.id}>
           {queue[trace]?.options.map((ans, index) => (
-            <li key={index} className="options">
+            <li
+              key={index}
+              className={`options ${result[trace] === index ? 'checked' : ''}`}
+            >
               <input
                 type="radio"
                 value={false}
