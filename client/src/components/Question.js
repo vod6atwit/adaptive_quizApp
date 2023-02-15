@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Wrapper from '../assets/wrapper/Question';
 import data from '../database/data';
 import { useAppContext } from '../context/appContext';
 import Loading from './Loading';
 
 const Question = ({ onChecked }) => {
-  const { isLoading, queue, trace, startExamAction } = useAppContext();
+  const { isLoading, queue, trace, startExamAction, setCheckedAnswer } =
+    useAppContext();
 
   useEffect(() => {
     startExamAction();
@@ -16,7 +17,8 @@ const Question = ({ onChecked }) => {
   }
 
   const onSelect = index => {
-    // setChecked(!checked);
+    setCheckedAnswer();
+    // for store the user options selected to the result array
     onChecked(index);
   };
 

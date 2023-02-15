@@ -9,8 +9,11 @@ import {
   RESTART_EXAM_ACTION,
   SET_USER_ID,
   MOVE_NEXT_ACTION,
+  SET_CHECK_ANSWER,
+  SET_UNCHECK_ANSWER,
   MOVE_PREV_ACTION,
   SET_RESULT_ACTION,
+  UPDATE_RESULT_ACTION,
 } from './actions';
 import reducer from './reducer';
 
@@ -25,6 +28,7 @@ const initialState = {
   queue: [],
   answers: [],
   trace: 0,
+  isCheck: false,
 
   // for results
   userId: null,
@@ -78,10 +82,28 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_USER_ID });
   };
 
+  const setCheckedAnswer = () => {
+    dispatch({ type: SET_CHECK_ANSWER });
+  };
+
+  const setUncheckedAnswer = () => {
+    dispatch({ type: SET_UNCHECK_ANSWER });
+  };
+
   const pushAnswer = checked => {
     dispatch({
       type: SET_RESULT_ACTION,
       payload: {
+        checked,
+      },
+    });
+  };
+
+  const updateAnswer = ({ trace, checked }) => {
+    dispatch({
+      type: UPDATE_RESULT_ACTION,
+      payload: {
+        trace,
         checked,
       },
     });
@@ -98,6 +120,9 @@ const AppProvider = ({ children }) => {
         movePrevQuestion,
         setUserId,
         pushAnswer,
+        updateAnswer,
+        setCheckedAnswer,
+        setUncheckedAnswer,
       }}
     >
       {children}

@@ -9,23 +9,36 @@ const Quiz = () => {
     queue,
     result,
     trace,
+    isCheck,
     moveNextQuestion,
     movePrevQuestion,
     pushAnswer,
+    updateAnswer,
+    setUncheckedAnswer,
   } = useAppContext();
 
   const [checked, setChecked] = useState(undefined);
 
-  // const state = useAppContext();
-  // useEffect(() => {
-  //   console.log(state);
-  // }, []);
+  useEffect(() => {
+    updateAnswer({ trace, checked });
+  }, [checked]);
 
   const onNext = () => {
     if (trace > queue.length - 1) return;
 
+    // load the next question
     moveNextQuestion();
-    pushAnswer(checked);
+
+    if (result.length <= trace) {
+      // in case user does not select any answers, add to result array 'undefined' before move to next question
+      if (!isCheck) {
+        pushAnswer(undefined);
+      } else {
+        pushAnswer(checked);
+      }
+    }
+
+    setUncheckedAnswer();
   };
 
   const onPrev = () => {
@@ -35,6 +48,9 @@ const Quiz = () => {
   };
 
   const onChecked = check => {
+    if (check === checked) {
+      updateAnswer({ trace, checked });
+    }
     setChecked(check);
   };
 
@@ -50,11 +66,16 @@ const Quiz = () => {
         <Question onChecked={onChecked} />
 
         <div className="grid">
-          <button className="btn btn-block" onClick={onPrev}>
-            prev
-          </button>
+          {trace > 0 ? (
+            <button className="btn btn-block" onClick={onPrev}>
+              prev
+            </button>
+          ) : (
+            <div></div>
+          )}
+
           <button className="btn btn-block" onClick={onNext}>
-            next
+            {trace === queue.length - 1 ? 'Finish' : 'Next'}
           </button>
         </div>
       </div>

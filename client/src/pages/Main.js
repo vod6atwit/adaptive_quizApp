@@ -21,14 +21,14 @@ const Main = () => {
           <li>The result will be declared at the end of the quiz.</li>
         </ol>
 
-        <form id="form">
+        {/* <form id="form">
           <input
             ref={inputRef}
             type="text"
             placeholder="Username*"
             className="form-input"
           />
-        </form>
+        </form> */}
 
         <div>
           <Link className="btn" to="/quiz">

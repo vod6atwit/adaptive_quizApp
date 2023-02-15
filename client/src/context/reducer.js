@@ -7,7 +7,10 @@ import {
   SET_USER_ID,
   MOVE_NEXT_ACTION,
   MOVE_PREV_ACTION,
+  SET_CHECK_ANSWER,
+  SET_UNCHECK_ANSWER,
   SET_RESULT_ACTION,
+  UPDATE_RESULT_ACTION,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -51,6 +54,20 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === SET_CHECK_ANSWER) {
+    return {
+      ...state,
+      isCheck: true,
+    };
+  }
+
+  if (action.type === SET_UNCHECK_ANSWER) {
+    return {
+      ...state,
+      isCheck: false,
+    };
+  }
+
   if (action.type === MOVE_NEXT_ACTION) {
     return {
       ...state,
@@ -75,6 +92,16 @@ const reducer = (state, action) => {
     return {
       ...state,
       result: [...state.result, action.payload.checked],
+    };
+  }
+  if (action.type === UPDATE_RESULT_ACTION) {
+    return {
+      ...state,
+      result: state.result.fill(
+        action.payload.checked,
+        action.payload.trace,
+        action.payload.trace + 1
+      ),
     };
   }
 
