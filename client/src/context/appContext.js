@@ -1,5 +1,5 @@
 import React, { useContext, useReducer } from 'react';
-import data from '../database/data';
+import { questions, answers } from '../database/data';
 
 import {
   DISPLAY_ALERT,
@@ -53,12 +53,13 @@ const AppProvider = ({ children }) => {
   const startExamAction = async () => {
     dispatch({ type: START_EXAM_BEGIN });
     try {
-      const queue = await data;
+      const queue = await questions;
 
       dispatch({
         type: START_EXAM_SUCCESS,
         payload: {
           queue,
+          answers,
         },
       });
     } catch (err) {

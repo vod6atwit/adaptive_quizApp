@@ -45,6 +45,7 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       queue: action.payload.queue,
+      answers: action.payload.answers,
     };
   }
 

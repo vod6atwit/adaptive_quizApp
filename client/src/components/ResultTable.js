@@ -1,7 +1,7 @@
 import React from 'react';
 import Wrapper from '../assets/wrapper/ResultTable';
 
-const ResultTable = () => {
+const ResultTable = ({ attempts, earnPoints, result }) => {
   return (
     <Wrapper>
       <table>
@@ -16,9 +16,9 @@ const ResultTable = () => {
         <tbody>
           <tr className="table-body">
             <td>Duy Vo</td>
-            <td>03</td>
-            <td>20</td>
-            <td>passed</td>
+            <td>{attempts}</td>
+            <td>{earnPoints}</td>
+            <td>{result}</td>
           </tr>
         </tbody>
       </table>
