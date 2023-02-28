@@ -14,6 +14,7 @@ import connectDB from './db/connect.js';
 // router
 // import authRouter from './routes/authRoutes.js';
 import questionsRouter from './routes/questionsRoutes.js';
+import resultsRouter from './routes/resultsRoutes.js';
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
@@ -25,6 +26,7 @@ app.use(express.json());
 // ROUTES
 // app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/questions', questionsRouter);
+app.use('/api/v1/results', resultsRouter);
 
 app.get('/', (req, res) => {
   res.json('get request');

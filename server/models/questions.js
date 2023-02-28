@@ -2,20 +2,13 @@ import mongoose from 'mongoose';
 
 const QuestionSchema = new mongoose.Schema(
   {
-    topic: {
-      type: 'string',
-    },
-    question: {
+    questions: {
       type: Array,
       default: [],
     },
     answers: {
       type: Array,
       default: [],
-    },
-    difficulty: {
-      type: Number,
-      default: 0,
     },
   },
   {

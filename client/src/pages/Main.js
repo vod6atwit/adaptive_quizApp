@@ -1,10 +1,10 @@
 import React from 'react';
-import { useRef } from 'react';
+// import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Wrapper from '../assets/wrapper/Main';
 
 const Main = () => {
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
 
   return (
     <Wrapper>
