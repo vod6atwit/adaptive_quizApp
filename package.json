@@ -1,0 +1,25 @@
+{
+  "name": "adaptive-quiz-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "npm start --prefix server --ignore client",
+    "start": "concurrently --kill-others-on-fail \" npm run server \" \" npm run client \""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vod6atwit/adaptive_quizApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vod6atwit/adaptive_quizApp/issues"
+  },
+  "homepage": "https://github.com/vod6atwit/adaptive_quizApp#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
