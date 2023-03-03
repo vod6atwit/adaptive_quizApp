@@ -4,6 +4,7 @@ const Wrapper = styled.section`
   /* background-color: red; */
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   .container {
@@ -13,6 +14,9 @@ const Wrapper = styled.section`
     border-radius: var(--borderRadius);
     border: 0.25rem solid var(--primary-500);
     padding: 2rem 2rem;
+  }
+  .title {
+    /* background-color: var(--primary-100); */
   }
   .grid {
     display: flex;

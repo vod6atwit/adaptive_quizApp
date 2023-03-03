@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Wrapper from '../assets/wrapper/Question';
-import data from '../database/data';
+// import data from '../database/data';
 import { useAppContext } from '../context/appContext';
 import Loading from './Loading';
 
@@ -9,8 +9,11 @@ const Question = ({ onChecked }) => {
     useAppContext();
 
   useEffect(() => {
+    // console.log('here');
     startExamAction();
   }, []);
+
+  // console.log(queue);
 
   if (isLoading) {
     return <Loading center={true} />;
@@ -25,9 +28,10 @@ const Question = ({ onChecked }) => {
   return (
     <Wrapper>
       <div className="questions">
-        <h2 className="text-light">{queue[trace]?.question}</h2>
+        <h2 className="text-light question">{`question ${trace + 1} :`}</h2>
+        <h2 className="text-light">{queue[trace]?.q}</h2>
 
-        <ul key={queue[trace]?.id}>
+        <ul key={queue[trace]?._id}>
           {queue[trace]?.options.map((ans, index) => (
             <li
               key={index}
@@ -41,7 +45,7 @@ const Question = ({ onChecked }) => {
                 onChange={() => onSelect(index)}
               />
               <label className="text" htmlFor={`q${index}-option`}>
-                {ans}
+                {ans ? ans : ''}
               </label>
             </li>
           ))}

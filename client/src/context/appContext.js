@@ -1,5 +1,6 @@
 import React, { useContext, useReducer } from 'react';
 import { questions, answers } from '../database/data';
+import axios from 'axios';
 
 import {
   DISPLAY_ALERT,
@@ -7,6 +8,7 @@ import {
   START_EXAM_BEGIN,
   START_EXAM_SUCCESS,
   RESTART_EXAM_ACTION,
+  FINISH_EXAM_ACTION,
   SET_USER_ID,
   MOVE_NEXT_ACTION,
   SET_CHECK_ANSWER,
@@ -14,6 +16,7 @@ import {
   MOVE_PREV_ACTION,
   SET_RESULT_ACTION,
   UPDATE_RESULT_ACTION,
+  HANDLE_CHANGE,
 } from './actions';
 import reducer from './reducer';
 
@@ -29,6 +32,15 @@ const initialState = {
   answers: [],
   trace: 0,
   isCheck: false,
+  topicOptions: [
+    'sysadmin_cli',
+    'sysadmin_bash_script',
+    'sysadmin_regex',
+    'sysadmin_filesystem',
+    'sysadmin_users_groups',
+    'TestQuizzes',
+  ],
+  topic: 'sysadmin_cli',
 
   // for results
   userId: null,
@@ -39,6 +51,25 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const authFetch = axios.create({
+    baseURL: '/api/v1',
+  });
+
+  // axios configuration response
+  authFetch.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      console.log(error.response);
+      // log the user out if unauthorized
+      // if (error.response.status === 401) {
+      //   logoutUser();
+      // }
+      return Promise.reject(error);
+    }
+  );
 
   const clearAlert = () => {
     setTimeout(() => {
@@ -51,20 +82,40 @@ const AppProvider = ({ children }) => {
   };
 
   const startExamAction = async () => {
+    const { topic } = state;
+    let url = `/questions?topic=${topic}`;
+
     dispatch({ type: START_EXAM_BEGIN });
     try {
-      const queue = await questions;
+      const { data } = await authFetch.get(url);
+
+      const { total, questions } = data;
+      // console.log(questions);
 
       dispatch({
         type: START_EXAM_SUCCESS,
         payload: {
-          queue,
-          answers,
+          questions,
+          // answer,
         },
       });
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const finishExamAction = () => {
+    const { queue } = state;
+    const answers = [];
+
+    for (let i = 0; i < queue.length; i++) {
+      answers.push(queue[i].options.indexOf(queue[i].answer));
+    }
+    dispatch({ type: FINISH_EXAM_ACTION, payload: { answers } });
+  };
+
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
   };
 
   const reStartExamAction = () => {
@@ -116,6 +167,7 @@ const AppProvider = ({ children }) => {
         ...state,
         displayAlert,
         startExamAction,
+        finishExamAction,
         reStartExamAction,
         moveNextQuestion,
         movePrevQuestion,
@@ -124,6 +176,7 @@ const AppProvider = ({ children }) => {
         updateAnswer,
         setCheckedAnswer,
         setUncheckedAnswer,
+        handleChange,
       }}
     >
       {children}

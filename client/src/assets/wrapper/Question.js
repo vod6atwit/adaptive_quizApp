@@ -9,6 +9,11 @@ const Wrapper = styled.div`
   .text-light {
     font-size: 2rem;
   }
+
+  .question {
+    font-weight: 600;
+  }
+
   input {
     appearance: none;
 

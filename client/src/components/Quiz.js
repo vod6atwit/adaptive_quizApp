@@ -15,6 +15,8 @@ const Quiz = () => {
     pushAnswer,
     updateAnswer,
     setUncheckedAnswer,
+    finishExamAction,
+    topic,
   } = useAppContext();
 
   const [checked, setChecked] = useState(undefined);
@@ -55,14 +57,16 @@ const Quiz = () => {
   };
 
   if (result.length && result.length >= queue.length) {
+    finishExamAction();
     return <Navigate to="/result" />;
   }
 
   return (
     <Wrapper>
+      <h1 className="title">{`${
+        topic === 'TestQuizzes' ? 'Test' : topic
+      } quiz`}</h1>
       <div className="container">
-        <h1 className="title">quiz</h1>
-
         <Question onChecked={onChecked} />
 
         <div className="grid">

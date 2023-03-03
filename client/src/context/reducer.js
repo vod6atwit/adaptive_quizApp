@@ -3,6 +3,7 @@ import {
   DISPLAY_ALERT,
   START_EXAM_BEGIN,
   START_EXAM_SUCCESS,
+  FINISH_EXAM_ACTION,
   RESTART_EXAM_ACTION,
   SET_USER_ID,
   MOVE_NEXT_ACTION,
@@ -11,6 +12,7 @@ import {
   SET_UNCHECK_ANSWER,
   SET_RESULT_ACTION,
   UPDATE_RESULT_ACTION,
+  HANDLE_CHANGE,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -33,6 +35,13 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === HANDLE_CHANGE) {
+    return {
+      ...state,
+      [action.payload.name]: action.payload.value,
+    };
+  }
+
   if (action.type === START_EXAM_BEGIN) {
     return {
       ...state,
@@ -44,7 +53,13 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      queue: action.payload.queue,
+      queue: action.payload.questions,
+    };
+  }
+
+  if (action.type === FINISH_EXAM_ACTION) {
+    return {
+      ...state,
       answers: action.payload.answers,
     };
   }
