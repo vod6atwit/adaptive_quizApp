@@ -5,17 +5,28 @@ const ResultSchema = new mongoose.Schema(
     userName: {
       type: 'string',
     },
-    result: {
+    resultOptions: {
       type: Array,
       default: [],
     },
-    points: {
+    totalQuizPoint: {
       type: Number,
       default: 0,
     },
-    total: {
+    totalQuestions: {
       type: Number,
       default: 0,
+    },
+    totalAttemps: {
+      type: Number,
+      default: 0,
+    },
+    earnPoints: {
+      type: Number,
+      default: 0,
+    },
+    quizResult: {
+      type: 'boolean',
     },
     rank: {
       type: Number,
@@ -26,10 +37,10 @@ const ResultSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'please provide user'],
     },
-  },
-  {
-    timestamps: true,
   }
+  // {
+  //   timestamps: true,
+  // }
 );
 
 // create Question collection

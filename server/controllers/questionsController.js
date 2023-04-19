@@ -39,7 +39,7 @@ const insertQuestion = async (req, res) => {
 
     await doc.loadInfo(); // loads document properties and worksheets
 
-    const numOfSheet = doc.sheetCount - 2;
+    const numOfSheet = doc.sheetCount - 1;
 
     // console.log(numOfSheet);
     // let sheet = doc.sheetsByIndex[0];
