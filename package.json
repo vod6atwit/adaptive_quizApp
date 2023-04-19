@@ -6,6 +6,9 @@
   "scripts": {
     "client": "npm start --prefix client",
     "server": "npm start --prefix server --ignore client",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "setup": "npm run install-client && npm run install-server",
     "start": "concurrently --kill-others-on-fail \" npm run server \" \" npm run client \""
   },
   "repository": {
