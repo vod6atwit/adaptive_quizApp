@@ -16,10 +16,12 @@ const Landing = () => {
             <span>Adaptive</span> Quiz App
           </h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-            facilis voluptates! Quia repudiandae fugiat officiis harum autem,
-            voluptas ex voluptates, cupiditate architecto quaerat ducimus
-            maiores excepturi veritatis laudantium placeat! Sequi.
+            Adaptive quizzes are a type of assessment that adjusts to the skill
+            level of the student, providing a more personalized learning
+            experience. Adaptive learning may contribute to both improving
+            student learning outcomes and increasing student motivation and
+            engagement. The Adaptive Quiz activity enables a teacher to create
+            tests that efficiently measure the takers' abilities.
           </p>
           <Link to="/register" className="btn btn-hero">
             Login/Register

@@ -1,6 +1,12 @@
 import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
+  SETUP_USER_BEGIN,
+  SETUP_USER_SUCCESS,
+  SETUP_USER_ERROR,
+  GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_SUCCESS,
+  LOGOUT_USER,
   START_EXAM_BEGIN,
   START_EXAM_SUCCESS,
   FINISH_EXAM_ACTION,
@@ -31,7 +37,66 @@ const reducer = (state, action) => {
       ...state,
       showAlert: false,
       alertType: '',
-      alearText: '',
+      alertText: '',
+    };
+  }
+
+  if (action.type === SETUP_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === SETUP_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      // using this line if you send the token with the payload in appContext
+      token: action.payload.token,
+      showAlert: true,
+      alertType: 'success',
+      alertText: action.payload.alertText,
+    };
+  }
+
+  if (action.type === SETUP_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === LOGOUT_USER) {
+    return {
+      ...initialState,
+      userLoading: false,
+
+      //// using this line if you send the token with the payload in appContext
+      // user: null,
+      // token: null,
+      // userLocation: '',
+      // jobLocation: '',
+    };
+  }
+
+  if (action.type === GET_CURRENT_USER_BEGIN) {
+    return {
+      ...state,
+      userLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === GET_CURRENT_USER_SUCCESS) {
+    return {
+      ...state,
+      userLoading: false,
+      user: action.payload.user,
     };
   }
 

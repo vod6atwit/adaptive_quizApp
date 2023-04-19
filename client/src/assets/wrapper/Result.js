@@ -38,6 +38,7 @@ const Wrapper = styled.div`
     margin-top: 1rem;
     display: flex;
     justify-content: center;
+    gap: 1.5rem;
   }
   .btn {
     padding: 0.5rem 2rem;

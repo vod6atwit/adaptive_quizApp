@@ -6,7 +6,7 @@ import Wrapper from '../assets/wrapper/Main';
 import { useAppContext } from '../context/appContext';
 
 const Main = () => {
-  const { handleChange, topicOptions } = useAppContext();
+  const { handleChange, topicOptions, topic, logoutUser } = useAppContext();
 
   const handleSearch = e => {
     const name = e.target.name;
@@ -15,6 +15,10 @@ const Main = () => {
     // if (isLoading) return;
 
     handleChange({ name, value });
+  };
+
+  const onLogout = () => {
+    logoutUser();
   };
 
   return (
@@ -49,6 +53,14 @@ const Main = () => {
         <div>
           <Link className="btn" to="/quiz">
             Start Quiz
+          </Link>
+          <Link
+            style={{ marginLeft: '20px' }}
+            className="btn"
+            to="/"
+            onClick={onLogout}
+          >
+            Log out
           </Link>
         </div>
       </div>

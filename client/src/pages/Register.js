@@ -1,6 +1,7 @@
 import Wrapper from '../assets/wrapper/Register';
 import { Logo, FormRow, Alert } from '../components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 
 const initialState = {
@@ -11,9 +12,12 @@ const initialState = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [values, setvalues] = useState(initialState);
 
-  const { showAlert, displayAlert } = useAppContext();
+  const { isLoading, showAlert, displayAlert, setupUser, user } =
+    useAppContext();
 
   const onSubmit = e => {
     e.preventDefault();
@@ -25,8 +29,28 @@ const Register = () => {
     }
 
     const currentUser = { name, email, password };
-    console.log(currentUser);
+    if (isMember) {
+      setupUser({
+        currentUser,
+        endPoint: 'login',
+        alertText: 'Login Successful! Redirecting...',
+      });
+    } else {
+      setupUser({
+        currentUser,
+        endPoint: 'register',
+        alertText: 'User Created! Redirecting...',
+      });
+    }
   };
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    }
+  }, [user, navigate]);
 
   const handleChange = e => {
     setvalues({ ...values, [e.target.name]: e.target.value });

@@ -7,24 +7,40 @@ import { useEffect } from 'react';
 import { attemptsNumber, earnPointsNumber, flagResult } from '../helper';
 
 const Result = () => {
-  const { queue, answers, result, userId, reStartExamAction } = useAppContext();
+  const {
+    queue,
+    answers,
+    result,
+    user,
+    reStartExamAction,
+    saveResult,
+    logoutUser,
+  } = useAppContext();
 
   const point = 10;
+  const totalQuestions = queue.length;
   const totalPoints = queue.length * point;
   const attempts = attemptsNumber(result);
   const earnPoints = earnPointsNumber({ result, answers, point });
   const flag = flagResult({ totalPoints, earnPoints });
 
-  // useEffect(() => {
-  //   console.log(result);
-  //   console.log(totalPoints);
-  //   console.log(attempts);
-  //   console.log(earnPoints);
-  //   console.log(flag);
-  // });
+  useEffect(() => {
+    saveResult({
+      totalQuizPoint: totalPoints,
+      totalQuestions,
+      totalAttemps: attempts,
+      earnPoints,
+      quizResult: flag,
+      // rank,
+    });
+  });
 
   const onRestart = () => {
     reStartExamAction();
+  };
+
+  const onLogout = () => {
+    logoutUser();
   };
 
   return (
@@ -35,7 +51,7 @@ const Result = () => {
         <div className="result flex-center">
           <div className="flex">
             <span>Username :</span>
-            <span className="bold">Duy Vo</span>
+            <span className="bold">{user.name}</span>
           </div>
           <div className="flex">
             <span>Total Quiz Points : </span>
@@ -74,10 +90,17 @@ const Result = () => {
           <Link className="btn" to="/" onClick={onRestart}>
             Restart
           </Link>
+          <Link className="btn" to="/" onClick={onLogout}>
+            Continue
+          </Link>
+          <Link className="btn" to="/" onClick={onLogout}>
+            Log out
+          </Link>
         </div>
 
         <div>
           <ResultTable
+            name={user.name}
             attempts={attempts}
             earnPoints={earnPoints}
             result={flag ? 'Passed' : 'Failed'}
